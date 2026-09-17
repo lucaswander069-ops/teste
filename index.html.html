@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="OHMNITRIX — tecnologia, design e estratégias digitais para transformar ideias em resultados." />
+  <title>OHMNITRIX — Tecnologia que transforma ideias</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #080a0f;
+      --surface: #11151d;
+      --surface-2: #181e28;
+      --text: #f6f8fb;
+      --muted: #9ba5b5;
+      --accent: #c7ff3d;
+      --accent-hover: #dcff83;
+      --border: rgba(255,255,255,.10);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 80% 0%, rgba(199,255,61,.08), transparent 28%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .container {
+      width: min(92%, var(--max));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 110px 0;
+      position: relative;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .tag::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      max-width: 760px;
+      font-size: clamp(2rem, 5vw, 4.3rem);
+      line-height: 1.04;
+      letter-spacing: -.065em;
+      margin-bottom: 22px;
+    }
+
+    .section-description {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .highlight {
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 15px 23px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0d0b;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-3px);
+    }
+
+    .btn-secondary {
+      border-color: var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,.025);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .site-header {
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-bottom: 1px solid transparent;
+      transition: .3s ease;
+    }
+
+    .site-header.scrolled {
+      background: rgba(8,10,15,.88);
+      border-color: var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -.07em;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--muted);
+      font-size: .88rem;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      transition: .2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-cta {
+      padding: 11px 17px;
+      font-size: .82rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+      border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 150px 0 90px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 55px;
+    }
+
+    .hero h1 {
+      max-width: 780px;
+      font-size: clamp(3.2rem, 7vw, 6.8rem);
+      line-height: .94;
+      letter-spacing: -.085em;
+      font-weight: 900;
+    }
+
+    .hero-text {
+      max-width: 570px;
+      margin-top: 27px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: 22px;
+    }
+
+    .hero-note span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    .hero-visual {
+      min-height: 470px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .orbit {
+      width: min(100%, 460px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(199,255,61,.25);
+      border-radius: 50%;
+      position: relative;
+      animation: rotate 24s linear infinite;
+    }
+
+    .orbit::before,
+    .orbit::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+    }
+
+    .orbit::after {
+      inset: 25%;
+      border-color: rgba(199,255,61,.3);
+    }
+
+    .orbit-core {
+      position: absolute;
+      inset: 35%;
+      display: grid;
+      place-items: center;
+      border-radius: 30%;
+      background: linear-gradient(145deg, var(--accent), #6c8e13);
+      color: #101508;
+      font-size: 2.4rem;
+      font-weight: 900;
+      box-shadow: 0 0 80px rgba(199,255,61,.18);
+      transform: rotate(-18deg);
+    }
+
+    .orbit-dot {
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 25px rgba(199,255,61,.7);
+    }
+
+    .dot-one {
+      top: 7%;
+      left: 48%;
+    }
+
+    .dot-two {
+      right: 7%;
+      bottom: 28%;
+    }
+
+    .dot-three {
+      left: 8%;
+      bottom: 25%;
+    }
+
+    .floating-card {
+      position: absolute;
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(17,21,29,.88);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 70px rgba(0,0,0,.25);
+    }
+
+    .floating-card strong {
+      display: block;
+      font-size: 1.15rem;
+    }
+
+    .floating-card small {
+      color: var(--muted);
+      font-size: .74rem;
+    }
+
+    .card-one {
+      top: 10%;
+      left: 0;
+    }
+
+    .card-two {
+      right: 0;
+      bottom: 13%;
+    }
+
+    .card-three {
+      left: 12%;
+      bottom: 2%;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 55px;
+    }
+
+    .service-card {
+      min-height: 260px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+      transition: .3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(199,255,61,.55);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(199,255,61,.35);
+      border-radius: 15px;
+      color: var(--accent);
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+    }
+
+    .service-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .about-panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 35px;
+      background: var(--surface);
+    }
+
+    .about-panel h3 {
+      font-size: 2rem;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .about-panel p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .about-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 25px;
+    }
+
+    .about-list div {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+    }
+
+    .about-list b {
+      color: var(--accent);
+    }
+
+    .about-list span {
+      color: var(--muted);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 55px;
+    }
+
+    .process-card {
+      padding: 28px;
+      border-top: 1px solid var(--accent);
+      background: var(--surface);
+      border-radius: 0 0 20px 20px;
+    }
+
+    .process-number {
+      color: var(--accent);
+      font-size: .8rem;
+      font-weight: 900;
+      margin-bottom: 35px;
+    }
+
+    .process-card h3 {
+      margin-bottom: 12px;
+    }
+
+    .process-card p {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 55px;
+    }
+
+    .project-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .project-image {
+      height: 240px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(135deg, rgba(199,255,61,.2), transparent),
+        radial-gradient(circle at 80% 20%, #35451d, transparent 35%),
+        #161b24;
+    }
+
+    .project-image strong {
+      font-size: 1.8rem;
+      letter-spacing: -.06em;
+    }
+
+    .project-image small {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .project-content {
+      padding: 25px;
+    }
+
+    .project-content h3 {
+      margin-bottom: 9px;
+    }
+
+    .project-content p {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .project-label {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .contact-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 55px;
+      padding: 55px;
+      border: 1px solid rgba(199,255,61,.25);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(199,255,61,.1), transparent 35%),
+        var(--surface);
+    }
+
+    .contact-box h2 {
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -.07em;
+      margin-bottom: 22px;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 15px 17px;
+      outline: none;
+      background: #0b0e14;
+      color: var(--text);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .contact-form textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .contact-form button {
+      border: 0;
+    }
+
+    footer {
+      padding: 35px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-content p {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .whatsapp {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 900;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #25d366;
+      color: white;
+      font-size: 1.7rem;
+      box-shadow: 0 10px 30px rgba(37,211,102,.25);
+      transition: .25s ease;
+    }
+
+    .whatsapp:hover {
+      transform: scale(1.08);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 950px) {
+      .nav-links {
+        position: absolute;
+        top: 82px;
+        left: 4%;
+        right: 4%;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 25px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: #10141c;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .hero-grid,
+      .about-grid,
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 130px;
+      }
+
+      .hero-visual {
+        min-height: 390px;
+      }
+
+      .services-grid,
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section {
+        padding: 75px 0;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 15vw, 5rem);
+      }
+
+      .hero-visual {
+        min-height: 300px;
+      }
+
+      .orbit {
+        width: 300px;
+      }
+
+      .floating-card {
+        padding: 11px;
+      }
+
+      .card-one {
+        left: 0;
+      }
+
+      .card-two {
+        right: 0;
+      }
+
+      .services-grid,
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        min-height: auto;
+      }
+
+      .about-panel,
+      .contact-box {
+        padding: 25px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Troque pelo seu número real: DDI 55 + DDD + número, sem espaços ou símbolos -->
+  <script>
+    const WHATSAPP_NUMBER = "5598999999999";
+  </script>
+
+  <header class="site-header" id="header">
+    <div class="container nav">
+      <a href="#inicio" class="logo">OHM<span>NITRIX</span></a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#inicio">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#processo">Processo</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <a class="btn btn-primary nav-cta" href="#contato">Começar projeto</a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="tag">Estúdio digital independente</div>
+
+          <h1>
+            Sua ideia.<br />
+            Nossa <span class="highlight">tecnologia.</span>
+          </h1>
+
+          <p class="hero-text">
+            Criamos experiências digitais, marcas e soluções inteligentes
+            para transformar negócios comuns em projetos memoráveis.
+          </p>
+
+          <div class="btn-row">
+            <a href="#contato" class="btn btn-primary">
+              Falar com a OHMNITRIX →
+            </a>
+
+            <a href="#servicos" class="btn btn-secondary">
+              Ver possibilidades
+            </a>
+          </div>
+
+          <div class="hero-note">
+            <span></span>
+            Design, estratégia e tecnologia em um só lugar.
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="orbit">
+            <div class="orbit-core">O</div>
+            <div class="orbit-dot dot-one"></div>
+            <div class="orbit-dot dot-two"></div>
+            <div class="orbit-dot dot-three"></div>
+          </div>
+
+          <div class="floating-card card-one">
+            <strong>+ Criatividade</strong>
+            <small>Ideias fora do padrão</small>
+          </div>
+
+          <div class="floating-card card-two">
+            <strong>Digital first</strong>
+            <small>Experiências pensadas para pessoas</small>
+          </div>
+
+          <div class="floating-card card-three">
+            <strong>∞ Possibilidades</strong>
+            <small>Do conceito ao lançamento</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicos">
+      <div class="container">
+        <div class="reveal">
+          <div class="tag">O que fazemos</div>
+          <h2 class="section-title">
+            Tudo que sua marca precisa para <span class="highlight">evoluir.</span>
+          </h2>
+          <p class="section-description">
+            Soluções digitais sob medida, com estética, estratégia e tecnologia
+            trabalhando juntas para gerar presença e resultados.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <div class="service-icon">↗</div>
+            <h3>Sites e Landing Pages</h3>
+            <p>
+              Páginas rápidas, responsivas e planejadas para apresentar sua
+              marca e transformar visitantes em clientes.
+            </p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">✦</div>
+            <h3>Branding e Identidade</h3>
+            <p>
+              Criamos identidades visuais fortes, coerentes e reconhecíveis
+              para destacar sua empresa no mercado.
+            </p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">⌘</div>
+            <h3>Automação e IA</h3>
+            <p>
+              Soluções inteligentes para reduzir tarefas repetitivas,
+              melhorar processos e ganhar produtividade.
+            </p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">◌</div>
+            <h3>Conteúdo e Estratégia</h3>
+            <p>
+              Planejamento digital, conteúdo e posicionamento para comunicar
+              sua proposta de valor com clareza.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <div class="container about-grid">
+        <div class="reveal">
+          <div class="tag">Sobre a OHMNITRIX</div>
+          <h2 class="section-title">
+            Não criamos apenas projetos. Criamos <span class="highlight">possibilidades.</span>
+          </h2>
+        </div>
+
+        <div class="about-panel reveal">
+          <h3>Estratégia com personalidade.</h3>
+
+          <p>
+            A OHMNITRIX nasceu para unir criatividade, tecnologia e visão de
+            negócio em experiências digitais que fazem sentido.
+          </p>
+
+          <p>
+            Nosso trabalho começa entendendo o seu objetivo e termina com uma
